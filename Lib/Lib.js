@@ -61,6 +61,44 @@ Lib.getDates = function(filter){
 	return res;
 }
 
+Lib.rankData = function(sourceData, sortIndex){
+        //sortIndex example:{p:-1,ww:-1,sc:-1} 1:升序，-1:降序
+        sourceData.sort(
+                function(a,b){
+                return rankCell(a, b, sortIndex, 0);
+        });
+        function rankCell(a, b, keyArr, index){
+                var keys = Object.keys(keyArr);
+                if(keyArr[keys[index]] == 1){
+                        //升序
+                        if(index >= keys.length){
+                                return -1;
+                        }else{
+                                if(a[keys[index]] > b[keys[index]]){
+                                        return 1;
+                                }else if(a[keys[index]] < b[keys[index]]){
+                                        return -1;
+                                }else{
+                                        return rankCell(a,b,keyArr,++index);
+                                }
+                        }
+                }else{
+                        //降序
+                        if(index >= keys.length){
+                                return 1;
+                        }else{
+                                if(a[keys[index]] > b[keys[index]]){
+                                        return -1;
+                                }else if(a[keys[index]] < b[keys[index]]){
+                                        return 1;
+                                }else{
+                                        return rankCell(a,b,keyArr,++index);
+                                }
+                        }
+                }
+        }
+}
+
 Lib.inIt = function(v,list){
 	var found = false;
 	for (var i = 0; i < list.length; i++) {

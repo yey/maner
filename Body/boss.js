@@ -6,13 +6,13 @@ var mem = require('./memory.js').data;
 
 cell.on('activityBossBegin',function(){
 	//no boss info now
-	cell.emit('group', 'check', ['boss']);
+	cell.emit('activityBossReady');
 });
 
 cell.on('group',function(type,args){
 	switch(type){
 		case 'check':{
-			
+
 			break;
 		}
 		case 'change':{
@@ -36,6 +36,12 @@ cell.on('activityBossReady',function(){
 	}else{
 		cell.emit('activityBossAllReady');
 	}
+});
+
+cell.on('activityBossAllReady',function(){
+	hand.fightBoss(function(res){
+
+	});
 });
 
 function dida(){
